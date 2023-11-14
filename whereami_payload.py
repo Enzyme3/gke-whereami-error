@@ -11,7 +11,7 @@ import urllib3
 from urllib3 import Retry
 # gRPC stuff
 import grpc
-from six import b
+#from six import b
 import whereami_pb2
 import whereami_pb2_grpc
 

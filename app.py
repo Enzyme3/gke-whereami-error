@@ -1,4 +1,5 @@
 from flask import Flask, request, Response, jsonify
+from datetime import datetime
 import logging
 from logging.config import dictConfig
 import sys
@@ -160,6 +161,10 @@ def grpc_serve():
 @app.route('/healthz')  # healthcheck endpoint
 @metrics.do_not_track()  # exclude from prom metrics
 def i_am_healthy():
+    if os.getenv('FORCE_FAIL_HEALTH') == 'TRUE':
+        time_now = datetime.now()
+        if time_now.minute % 2 == 0:
+            return "forcing failure of healthcheck", 500
     return ('OK')
 
 
@@ -167,6 +172,10 @@ def i_am_healthy():
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def home(path):
+    if os.getenv('FORCE_FAIL') == 'TRUE':
+        time_now = datetime.now()
+        if time_now.minute % 2 == 0:
+            return "forcing failure", 500
 
     payload = whereami_payload.build_payload(request.headers)
 
