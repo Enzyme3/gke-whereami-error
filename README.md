@@ -44,7 +44,7 @@ spec:
           timeoutSeconds: 1
         env:
           - name: FORCE_FAIL # if set to TRUE, causes app to return 5XX every minute
-            value: FALSE
+            value: "FALSE"
           - name: FORCE_FAIL_HEALTH # if set to TRUE, causes app healthcheck to return 5XX every minute
-            value: FALSE
+            value: "FALSE"
 ```
